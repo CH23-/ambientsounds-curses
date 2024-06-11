@@ -14,7 +14,9 @@ The program depends on :
 ## Shortcuts
 
 - `Up` and `Down` to select an item
-- `Left` and `Right` to change the volume of the selected track
+- `Left` and `Right` to change the volume of the selected track or master volume
+- `1` through `0` to set volume per 10% (1 = 10%, 9 = 90%, 0 = 100%)
+- `m` to mute track
 - `s` to save the current settings
 - `q` to quit
 
