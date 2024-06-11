@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2014-2015 Muges
@@ -149,7 +149,7 @@ class Preset:
         Apply the preset
         """
         for sound in self.master.get_sounds():
-            if self.volumes.has_key(sound.name):
+            if sound.name in self.volumes:
                 sound.set_volume(self.volumes[sound.name])
             else:
                 sound.set_volume(0)
@@ -162,7 +162,7 @@ class Preset:
         for sound in self.master.get_sounds():
             volume = sound.get_volume()
             if volume == 0:
-                if self.volumes.has_key(sound.name):
+                if sound.name in self.volumes:
                     self.volumes.pop(sound.name)
             else:
                 self.volumes[sound.name] = volume
@@ -206,7 +206,7 @@ class MasterVolume(Volume):
                     if os.path.splitext(filename)[1] == ".ogg":
                         self.sounds.append(Sound(os.path.join(sounddir, filename), self))
 
-        self.sounds.sort()
+        self.sounds.sort(key=lambda sound: sound.name.lower())
         
         pygame.mixer.set_num_channels(len(self.sounds))
 

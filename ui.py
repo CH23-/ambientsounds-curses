@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2014-2015 Muges
@@ -81,20 +81,20 @@ class VolumeWidget(OneLineWidget):
             attribute = 0
 
         # Draw the name
-        self.parent.addstr(y, 0, " "+self.volume.name+" ", attribute)
+        self.parent.addstr(y, 0, "│"+self.volume.name, attribute)
 
         # Position and width of the slider
-        slidex = self.namesw+5
-        slidew = width-slidex-2-1
-        slidewleft = (self.volume.get_volume()*slidew)/100
-        slidewright = slidew-slidewleft
+        slidex = int(self.namesw+5)
+        slidew = int(width-slidex-2-1)
+        slidewleft = int((self.volume.get_volume()*slidew)/100)
+        slidewright = int(slidew-slidewleft)
 
         # Draw the slider
-        self.parent.addstr(y, slidex-2, "[ ")
-        self.parent.addstr(y, slidex+slidew, " ]")
+        self.parent.addstr(y, slidex-2, "")
+        self.parent.addstr(y, slidex+slidew, "│")
 
-        self.parent.addstr(y, slidex, "#"*slidewleft)
-        self.parent.addstr(y, slidex+slidewleft, "-"*slidewright)
+        self.parent.addstr(y, slidex-1, "▒"*slidewleft+"░")
+        self.parent.addstr(y, slidex+slidewleft, " "*slidewright)
 
     def on_key(self, c, ui):
         if c in (curses.KEY_LEFT, ord('-')):
@@ -106,6 +106,12 @@ class VolumeWidget(OneLineWidget):
         elif c == ord('m'):
             # Mute
             self.volume.set_volume(0)
+            # Full volume
+        elif c == ord('0'):
+            self.volume.set_volume(100)
+            # Select volume
+        elif chr(c) in "123456789":
+            self.volume.set_volume(int(chr(c)) * 10)
         else:
             return False
         return True
@@ -212,7 +218,7 @@ class ScrollableList:
                 w.draw(y, width, y == self.selection)
             y += 1
 
-        ptop = max(0, min(self.selection - height/2, self.height-height-1))
+        ptop = int(max(0, min(self.selection - height/2, self.height-height-1)))
         self.pad.refresh(ptop, 0, stop, sleft, sbottom, sright)
 
     def on_key(self, c, ui):
@@ -288,7 +294,7 @@ class MessageView:
         y = (height-messageheight)/2
         for text in self.message:
             x = (width-len(text))/2
-            self.pad.addstr(y, x, text)
+            self.pad.addstr(int(y), int(x), text)
             y += 1
 
         self.pad.refresh(0, 0, stop, sleft, sbottom, sright)

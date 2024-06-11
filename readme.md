@@ -7,7 +7,7 @@ etc...
 
 The program depends on :
 
-- [python 2](https://www.python.org/)
+- [python 3](https://www.python.org/)
 - [pygame](http://www.pygame.org/news.html) to play the tracks
 - [mutagen](https://bitbucket.org/lazka/mutagen) to read the ogg vorbis tags
 
